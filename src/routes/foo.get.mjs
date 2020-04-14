@@ -1,9 +1,10 @@
 import express from "express";
 import { Route } from "persnickety";
+import Repository from "../repository.mjs";
 
 const router = express.Router();
 
-export default function initFooGet() {
+export default function initFooGet(Foo = new Repository("foo.json")) {
   Route("/foo", {
     get: {
       summary: "Returns all Foos",
@@ -25,7 +26,9 @@ export default function initFooGet() {
       },
     },
   });
-  router.get("/", (req, res) => res.send("Ok Foo"));
+  router.get("/", async (req, res) => {
+    res.json(await Foo.getAll());
+  });
 
   Route("/foo/{id}", {
     get: {
@@ -53,7 +56,11 @@ export default function initFooGet() {
       },
     },
   });
-  router.get("/:id", (req, res) => res.send(`Ok Foo ${req.params.id}`));
+  router.get("/:id", async (req, res) => {
+    return Foo.getById(req.params.id)
+      .then((model) => res.json(model))
+      .catch(() => res.status(404).send("Not Found"));
+  });
 
   return router;
 }

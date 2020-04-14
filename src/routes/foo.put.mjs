@@ -1,9 +1,10 @@
 import express from "express";
 import { Route } from "persnickety";
+import Repository from "../repository.mjs";
 
 const router = express.Router();
 
-export default function initFooPut() {
+export default function initFooPut(Foo = new Repository("foo.json")) {
   Route("/foo/{id}", {
     put: {
       summary: "Creates or updates a Foo by id",
@@ -44,13 +45,20 @@ export default function initFooPut() {
             },
           },
         },
-        "404": {
-          $ref: "#/components/responses/404",
-        },
       },
     },
   });
-  router.put("/:id", (req, res) => res.send(`Ok Foo PUT ${req.params.id}`));
+  router.put("/:id", async (req, res) => {
+    const id = req.params.id;
+    const model = { id, ...req.body };
+    return Foo.getById(id)
+      .then(() => 200)
+      .catch(() => 201)
+      .then(async (status) => {
+        await Foo.add(model);
+        res.status(status).json(model);
+      });
+  });
 
   return router;
 }

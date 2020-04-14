@@ -8,6 +8,8 @@ import swaggerUi from "swagger-ui-express";
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+app.use(express.json());
+
 const persnickety = Persnickety(schema);
 
 initDtos();
