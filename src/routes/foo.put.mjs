@@ -1,7 +1,5 @@
 import express from "express";
 import { Route } from "persnickety";
-import { FooIdParam } from "../dtos/Foo.mjs";
-import { NotFound } from "../swagger.mjs";
 
 const router = express.Router();
 
@@ -10,7 +8,11 @@ export default function initFooPut() {
     put: {
       summary: "Creates or updates a Foo by id",
       tags: ["Foo"],
-      parameters: [FooIdParam],
+      parameters: [
+        {
+          $ref: "#/components/parameters/stringIdInPath",
+        },
+      ],
       responses: {
         "200": {
           description: "Foo was updated",
@@ -32,7 +34,9 @@ export default function initFooPut() {
             },
           },
         },
-        ...NotFound("Foo"),
+        "404": {
+          $ref: "#/components/responses/404",
+        },
       },
     },
   });

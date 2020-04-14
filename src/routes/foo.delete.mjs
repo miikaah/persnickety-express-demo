@@ -1,7 +1,5 @@
 import express from "express";
 import { Route } from "persnickety";
-import { FooIdParam } from "../dtos/Foo.mjs";
-import { NotFound } from "../swagger.mjs";
 
 const router = express.Router();
 
@@ -10,19 +8,18 @@ export default function initFooDelete() {
     delete: {
       summary: "Deletes a Foo by id",
       tags: ["Foo"],
-      parameters: [FooIdParam],
-      responses: {
-        "200": {
-          description: "Foo was deleted",
-          content: {
-            "application/json": {
-              schema: {
-                $ref: "#/components/schemas/Foo",
-              },
-            },
-          },
+      parameters: [
+        {
+          $ref: "#/components/parameters/stringIdInPath",
         },
-        ...NotFound("Foo"),
+      ],
+      responses: {
+        "204": {
+          description: "Foo was deleted",
+        },
+        "404": {
+          $ref: "#/components/responses/404",
+        },
       },
     },
   });

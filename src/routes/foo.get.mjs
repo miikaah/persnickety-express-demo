@@ -1,7 +1,5 @@
 import express from "express";
 import { Route } from "persnickety";
-import { FooIdParam } from "../dtos/Foo.mjs";
-import { NotFound } from "../swagger.mjs";
 
 const router = express.Router();
 
@@ -33,7 +31,11 @@ export default function initFooGet() {
     get: {
       summary: "Returns a Foo by id",
       tags: ["Foo"],
-      parameters: [FooIdParam],
+      parameters: [
+        {
+          $ref: "#/components/parameters/stringIdInPath",
+        },
+      ],
       responses: {
         "200": {
           description: "A Foo",
@@ -45,7 +47,9 @@ export default function initFooGet() {
             },
           },
         },
-        ...NotFound("Foo"),
+        "404": {
+          $ref: "#/components/responses/404",
+        },
       },
     },
   });

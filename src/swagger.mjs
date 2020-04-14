@@ -13,17 +13,28 @@ export default {
       name: "Foo",
     },
   ],
-};
-
-export const NotFound = (modelName) => ({
-  "404": {
-    description: `${modelName} not found`,
-    content: {
-      "text/plain": {
+  components: {
+    parameters: {
+      stringIdInPath: {
+        name: "id",
+        in: "path",
+        required: true,
         schema: {
           type: "string",
         },
       },
     },
+    responses: {
+      "404": {
+        description: `Resource not found`,
+        content: {
+          "text/plain": {
+            schema: {
+              type: "string",
+            },
+          },
+        },
+      },
+    },
   },
-});
+};
