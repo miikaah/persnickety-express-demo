@@ -10,4 +10,12 @@ export default {
       },
     },
   },
+  FooUpsert: {
+    type: "object",
+    properties: {
+      size: {
+        type: "number",
+      },
+    },
+  },
 };
