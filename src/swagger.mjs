@@ -14,3 +14,16 @@ export default {
     },
   ],
 };
+
+export const NotFound = (modelName) => ({
+  "404": {
+    description: `${modelName} not found`,
+    content: {
+      "text/plain": {
+        schema: {
+          type: "string",
+        },
+      },
+    },
+  },
+});
