@@ -8,6 +8,7 @@ export default function initFooGet() {
     "/foo": {
       get: {
         summary: "Returns all Foos",
+        tags: ["Foo"],
         responses: {
           "200": {
             description: "A JSON array of Foos",
@@ -32,6 +33,7 @@ export default function initFooGet() {
     "/foo/{id}": {
       get: {
         summary: "Returns a Foo by id",
+        tags: ["Foo"],
         parameters: [
           {
             name: "id",
