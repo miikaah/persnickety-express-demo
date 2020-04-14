@@ -39,7 +39,7 @@ export default function initFooGet() {
             name: "id",
             in: "path",
             required: true,
-            "description:": "Foo id to look for",
+            description: "Foo id to look for",
             schema: {
               type: "string",
             },
