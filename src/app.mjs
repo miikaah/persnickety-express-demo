@@ -7,10 +7,21 @@ import swaggerUi from "swagger-ui-express";
 
 const PORT = process.env.PORT || 3001;
 const app = express();
+const persnickety = Persnickety(schema);
 
 app.use(express.json());
-
-const persnickety = Persnickety(schema);
+app.use(
+  persnickety.requestValidator({
+    ajvOptions: {
+      coerceTypes: true,
+    },
+    callback: (req, result) => {
+      if (result) {
+        console.log("Validation result", result);
+      }
+    },
+  })
+);
 
 initDtos();
 initRoutes(app);

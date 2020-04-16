@@ -9,6 +9,15 @@ export default function initFooGet(Foo = new Repository("foo.json")) {
     get: {
       summary: "Returns all Foos",
       tags: ["Foo"],
+      parameters: [
+        {
+          in: "query",
+          name: "maxSize",
+          schema: {
+            type: "number",
+          },
+        },
+      ],
       responses: {
         "200": {
           description: "A JSON array of Foos",
@@ -27,7 +36,12 @@ export default function initFooGet(Foo = new Repository("foo.json")) {
     },
   });
   router.get("/", async (req, res) => {
-    res.json(await Foo.getAll());
+    const models = await Foo.getAll();
+    res.json(
+      req.query.maxSize
+        ? models.filter((model) => model.size <= req.query.maxSize)
+        : models
+    );
   });
 
   Route("/foo/{id}", {
