@@ -25,6 +25,16 @@ export default {
       },
     },
     responses: {
+      "400": {
+        description: `Bad Request`,
+        content: {
+          "text/plain": {
+            schema: {
+              type: "string",
+            },
+          },
+        },
+      },
       "404": {
         description: `Resource not found`,
         content: {

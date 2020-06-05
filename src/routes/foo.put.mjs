@@ -45,6 +45,9 @@ export default function initFooPut(Foo = new Repository("foo.json")) {
             },
           },
         },
+        "400": {
+          $ref: "#/components/responses/400",
+        },
       },
     },
   });
