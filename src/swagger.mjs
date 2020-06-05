@@ -12,6 +12,9 @@ export default {
     {
       name: "Foo",
     },
+    {
+      name: "Product",
+    },
   ],
   components: {
     parameters: {

@@ -7,14 +7,11 @@ import swaggerUi from "swagger-ui-express";
 
 const PORT = process.env.PORT || 3001;
 const app = express();
-const persnickety = Persnickety(schema);
+const persnickety = Persnickety(schema, ["/api-docs/*", "/docs"]);
 
 app.use(express.json());
 app.use(
   persnickety.requestValidator({
-    ajvOptions: {
-      coerceTypes: true,
-    },
     callback: (req, result) => {
       if (result) {
         console.log("Validation result", result);

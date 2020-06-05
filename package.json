@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/app.mjs",
   "scripts": {
-    "start": "nodemon src/app.mjs --ignore 'foo.json'",
+    "start": "nodemon src/app.mjs --ignore 'foo.json' --ignore 'product.json'",
     "lint": "eslint 'src/**/*.{mjs,js,ts}'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
