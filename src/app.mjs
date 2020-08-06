@@ -4,6 +4,7 @@ import initRoutes from "./routes/init.mjs";
 import initDtos from "./dtos/init.mjs";
 import schema from "./swagger.mjs";
 import swaggerUi from "swagger-ui-express";
+import { promises as fs } from "fs";
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -24,6 +25,8 @@ initDtos();
 initRoutes(app);
 
 const genSchema = persnickety.getSchema();
+
+fs.writeFile("api-docs.json", JSON.stringify(genSchema, null, 2));
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(genSchema));
 app.use("/docs", (req, res) => {
